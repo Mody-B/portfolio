@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Syne } from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import "./globals.css";
 import "./lumen.css";
 
-const display = Syne({
+const display = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-atelier-display",
+  weight: ["400"],
+  variable: "--font-flow-display",
 });
 
-const sans = Space_Grotesk({
+const sans = Manrope({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-atelier-sans",
+  variable: "--font-flow-sans",
 });
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s · Mohamad Bitar",
   },
   description:
-    "Mohamad Bitar — AI engineer building RAG, embeddings, and LLM systems. Portfolio with interactive demos. mohamadbit.me",
+    "Mohamad Bitar — AI engineer building RAG, embeddings, and LLM systems. mohamadbit.me",
 };
 
 export default function RootLayout({

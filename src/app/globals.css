@@ -26,28 +26,28 @@
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --font-sans: var(--font-atelier-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-flow-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --background: #e8e8ea;
-  --foreground: #0a0a0a;
+  --background: #f4f5f2;
+  --foreground: #121412;
   --card: #ffffff;
-  --card-foreground: #0a0a0a;
+  --card-foreground: #121412;
   --popover: #ffffff;
-  --popover-foreground: #0a0a0a;
-  --primary: #0a0a0a;
-  --primary-foreground: #ffffff;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #0a0a0a;
-  --muted: #f0f0f2;
-  --muted-foreground: #5c5c5c;
-  --accent: #f0f0f2;
-  --accent-foreground: #0a0a0a;
+  --popover-foreground: #121412;
+  --primary: #121412;
+  --primary-foreground: #f4f5f2;
+  --secondary: #e8ebe4;
+  --secondary-foreground: #121412;
+  --muted: #e8ebe4;
+  --muted-foreground: #5a5f58;
+  --accent: #e8ebe4;
+  --accent-foreground: #121412;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #d6d6da;
-  --input: #d6d6da;
-  --ring: #0a0a0a;
+  --border: #d5d9d0;
+  --input: #d5d9d0;
+  --ring: #121412;
   --radius: 999px;
 }
 
@@ -57,7 +57,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-atelier-sans), system-ui, sans-serif;
+    font-family: var(--font-flow-sans), system-ui, sans-serif;
   }
   code {
     font-size: 0.88em;

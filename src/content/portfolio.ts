@@ -12,40 +12,61 @@ export const site = {
   email: "mohamad.bitar05@gmail.com",
   role: "AI Engineer",
   tagline:
-    "Building applied ML products—RAG, embeddings, and LLM systems that answer from real data with citations.",
+    "AI engineer who builds applied ML products: RAG, embeddings, vector search, and LLM systems that answer from real data with source citations.",
   availability: "Available for internships",
-  location: "Open to remote · Syria-based",
+  location: "Syria · Open to remote",
   education: {
     school: "Arab International University",
-    program: "Informatics Engineering — Artificial Intelligence",
-    status: "Fourth-year student · Expected 2028",
+    program: "Bachelor of Informatics Engineering, Artificial Intelligence specialization",
+    detail: "Fourth-year student",
+    expected: "2028",
   },
   socials: [
     {
-      label: "GitHub",
-      href: "https://github.com/Mody-B",
+      label: "Email",
+      href: "mailto:mohamad.bitar05@gmail.com",
     },
     {
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/mohamad-bitar-721b90324",
     },
     {
-      label: "Email",
-      href: "mailto:mohamad.bitar05@gmail.com",
+      label: "GitHub",
+      href: "https://github.com/Mody-B",
     },
   ],
 } as const;
 
-export const about = {
-  headline: "From laptop experiments to live study AI",
-  body: [
-    "I build applied ML products: retrieval-augmented generation, text embeddings, vector search, and LLM systems that answer from real data with source citations.",
-    "I took BAC AI from local experiments to a live website answering multilingual (Arabic, English, French) study questions from official textbooks—and I’m seeking AI/ML engineering internships and junior roles.",
-  ],
+export const summary = {
+  headline: "Summary",
+  body: "AI engineer who builds applied ML products: retrieval-augmented generation, text embeddings, vector search, and LLM systems that answer from real data with source citations. Took BAC AI from laptop experiments to a live website answering multilingual (Arabic, English, French) study questions from official textbooks. Fourth-year Informatics Engineering student specializing in AI, seeking AI/ML engineering internships and junior roles.",
 } as const;
 
+export type Experience = {
+  id: string;
+  title: string;
+  org: string;
+  period: string;
+  bullets: string[];
+};
+
+export const experience: Experience[] = [
+  {
+    id: "bac-ai",
+    title: "Founder / AI Engineer",
+    org: "BAC AI — Syrian Baccalaureate Study Assistant",
+    period: "July 2026 – Present",
+    bullets: [
+      "Built and launched a live study assistant where students chat with official Grade 12 textbooks, open the cited page, and revise with auto-generated quiz questions.",
+      "Designed the RAG pipeline end to end: PDF/OCR extraction, lesson-boundary chunking, BGE-M3 embeddings, and Qdrant vector search.",
+      "Tuned retrieval with intent routing and query-dependent search across Arabic, English, and French curricula.",
+      "Shipped FastAPI backend (JWT + Google sign-in), bilingual React app (Arabic RTL + English), Docker + GitHub Actions on Oracle Cloud.",
+    ],
+  },
+];
+
 export const skills = {
-  headline: "Where I focus",
+  headline: "Skills",
   groups: [
     {
       title: "AI Engineering",
@@ -56,31 +77,59 @@ export const skills = {
         "LLM integration",
         "Streaming generation",
         "Source citation",
-        "Multilingual QA",
+        "Multilingual QA (AR/EN/FR)",
       ],
     },
     {
       title: "Machine Learning",
       items: [
-        "BGE-M3 embeddings",
+        "Text embeddings (BGE-M3)",
         "Semantic search",
         "Chunking strategy",
-        "OCR pipelines",
+        "OCR (Tesseract, EasyOCR)",
         "Intent routing",
-        "Model comparison",
-        "Evaluation",
+        "Binary classification",
+        "Model comparison & evaluation",
       ],
     },
     {
-      title: "Stack",
+      title: "Models & Tools",
       items: [
-        "Python",
-        "TypeScript",
-        "FastAPI",
+        "Qwen",
+        "Ollama",
+        "OpenRouter",
         "Qdrant",
+        "sentence-transformers",
+        "scikit-learn",
+        "pandas",
+      ],
+    },
+    {
+      title: "Languages",
+      items: ["Python", "TypeScript", "SQL", "Dart"],
+    },
+    {
+      title: "Backend",
+      items: [
+        "FastAPI",
+        "Pydantic",
+        "SQLAlchemy",
+        "SQLite",
+        "JWT",
+        "OAuth (Google)",
+        "REST APIs",
+      ],
+    },
+    {
+      title: "Frontend & DevOps",
+      items: [
         "React",
-        "Docker",
+        "Vite",
+        "Bilingual RTL UI",
+        "Git",
         "GitHub Actions",
+        "Docker",
+        "Linux",
       ],
     },
   ],
@@ -96,6 +145,7 @@ export type Project = {
   stack: string[];
   period?: string;
   role?: string;
+  bullets?: string[];
   placeholder: boolean;
 };
 
@@ -110,9 +160,15 @@ export const projects: Project[] = [
     problem:
       "Students needed trustworthy answers grounded in official curricula—across Arabic, English, and French—not generic chatbot guesses.",
     approach:
-      "End-to-end RAG: PDF/OCR extraction, lesson-boundary chunking, BGE-M3 embeddings, Qdrant search, intent routing before generation, citation-pinned answers, FastAPI + bilingual React (RTL), Docker deploy.",
+      "End-to-end RAG: PDF/OCR extraction, lesson-boundary chunking, BGE-M3 embeddings, Qdrant search, intent routing, citation-pinned answers, FastAPI + bilingual React, Docker deploy.",
     outcome:
-      "Shipped a production web product with JWT/Google auth, subscriptions, admin panel, streaming generation (Qwen via Ollama locally / OpenRouter in production), and pytest API coverage.",
+      "Production web product with auth, subscriptions, admin panel, streaming generation, and pytest API coverage.",
+    bullets: [
+      "RAG pipeline: OCR, lesson-aware chunking, BGE-M3 1,024-dim embeddings, Qdrant search.",
+      "Intent routing and query-dependent retrieval across Arabic/English/French materials.",
+      "Grounding with separate catalogs, teacher guides, and citations pinned to official pages.",
+      "FastAPI + JWT/Google auth, bilingual React (RTL), Docker + GitHub Actions deploy.",
+    ],
     stack: [
       "Python",
       "FastAPI",
@@ -133,16 +189,26 @@ export const projects: Project[] = [
     problem:
       "Needed a clear baseline for clinical tabular prediction and model comparison.",
     approach:
-      "Trained and compared logistic regression and random forest with scikit-learn and pandas to select the best performer.",
+      "Trained and compared logistic regression and random forest with scikit-learn and pandas.",
     outcome:
       "Delivered a compared baseline with a documented winner for the classification task.",
+    bullets: [
+      "Built a binary classifier from several clinical factors.",
+      "Compared logistic regression and random forest to select the best performer.",
+    ],
     stack: ["Python", "scikit-learn", "pandas"],
     placeholder: false,
   },
 ];
 
 export const contact = {
-  headline: "Let’s build something grounded",
-  body: "Seeking AI/ML engineering internships and junior roles. If you’re shipping RAG, evals, or applied LLM products—reach out.",
+  headline: "Contact",
+  body: "Have an internship, junior role, or collaboration in mind? Reach out anytime.",
   cta: "Email Mohamad",
+} as const;
+
+/** @deprecated use summary — kept for preview pages */
+export const about = {
+  headline: summary.headline,
+  body: [summary.body],
 } as const;
