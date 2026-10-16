@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import "./grounded.css";
 import "./lumen.css";
+import "./grounded.css";
 
 const serif = Instrument_Serif({
   subsets: ["latin"],

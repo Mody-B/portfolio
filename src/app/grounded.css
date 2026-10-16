@@ -985,6 +985,11 @@
   gap: 0.8rem;
   max-width: calc(100vw - 1.5rem);
   pointer-events: none;
+  color-scheme: dark;
+}
+
+[data-theme="paper"] .chat-widget {
+  color-scheme: light;
 }
 
 .chat-widget > * {
@@ -1021,11 +1026,6 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-}
-
-.chat-starter-more {
-  border-color: color-mix(in oklab, var(--g-signal) 45%, var(--g-hair));
-  color: var(--g-signal);
 }
 
 .chat-widget-fab {
@@ -1271,34 +1271,37 @@
   min-height: 12rem;
 }
 
-.chat-bubble {
+.chat-widget .chat-bubble {
   border-radius: 0.75rem;
   padding: 0.7rem 0.85rem;
   max-width: 92%;
   background: var(--g-surface);
   border: 1px solid var(--g-hair);
+  color: var(--g-text);
 }
 
-.chat-bubble.chat-user {
+.chat-widget .chat-bubble.chat-user {
   align-self: flex-end;
   background: color-mix(in oklab, var(--g-signal) 18%, var(--g-surface));
   border-color: color-mix(in oklab, var(--g-signal) 40%, var(--g-hair));
 }
 
-.chat-role {
+.chat-widget .chat-role {
   display: block;
   font-family: var(--g-mono);
   font-size: 0.68rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--g-muted);
+  opacity: 1;
   margin-bottom: 0.25rem;
 }
 
-.chat-bubble p {
+.chat-widget .chat-bubble p {
   margin: 0;
   line-height: 1.45;
   font-size: 0.92rem;
+  color: var(--g-text);
 }
 
 .chat-widget-starters {
@@ -1308,27 +1311,36 @@
   padding: 0 0.85rem 0.65rem;
 }
 
-.studio-chip {
+.chat-widget .chat-chip {
   display: inline-flex;
   align-items: center;
-  padding: 0.35rem 0.65rem;
+  padding: 0.4rem 0.7rem;
   border-radius: 999px;
   border: 1px solid var(--g-hair);
-  background: var(--g-surface);
-  color: var(--g-text);
+  background: #2a2d22;
+  color: #f7f5ee;
   font-size: 0.72rem;
   font-family: var(--g-mono);
   cursor: pointer;
+  -webkit-text-fill-color: #f7f5ee;
 }
 
-.studio-chip:hover {
+.chat-widget .chat-chip:hover {
   border-color: var(--g-signal);
   color: var(--g-signal);
+  -webkit-text-fill-color: var(--g-signal);
+  background: #1a1c16;
 }
 
-.studio-chip:disabled {
+.chat-widget .chat-chip:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+.chat-widget .chat-starter-more {
+  border-color: color-mix(in oklab, var(--g-signal) 45%, var(--g-hair));
+  color: var(--g-signal);
+  -webkit-text-fill-color: var(--g-signal);
 }
 
 .chat-widget-form {
@@ -1339,7 +1351,7 @@
   background: var(--g-surface);
 }
 
-.studio-input {
+.chat-widget .chat-field {
   flex: 1;
   min-width: 0;
   border: 1px solid var(--g-hair);
@@ -1347,34 +1359,63 @@
   padding: 0.55rem 0.85rem;
   font: inherit;
   font-size: 0.88rem;
-  background: var(--g-panel);
-  color: var(--g-text);
+  background: #141612;
+  color: #f7f5ee;
+  -webkit-text-fill-color: #f7f5ee;
+  caret-color: var(--g-signal);
   outline: none;
 }
 
-.studio-btn {
+.chat-widget .chat-field::placeholder {
+  color: #b8bbae;
+  -webkit-text-fill-color: #b8bbae;
+  opacity: 1;
+}
+
+.chat-widget .chat-send {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.55rem 0.9rem;
   border-radius: 999px;
-  border: 1px solid var(--g-hair);
-  background: var(--g-panel);
-  color: var(--g-text);
+  border: 1px solid var(--g-signal);
+  background: var(--g-signal);
+  color: #0b0c0a;
+  -webkit-text-fill-color: #0b0c0a;
   font-size: 0.85rem;
+  font-family: var(--g-mono);
+  font-weight: 600;
   cursor: pointer;
 }
 
-.studio-btn-dark {
-  background: var(--g-signal);
-  color: var(--g-signal-ink);
-  border-color: var(--g-signal);
-  font-family: var(--g-mono);
-}
-
-.studio-btn:disabled {
+.chat-widget .chat-send:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+[data-theme="paper"] .chat-widget .chat-chip {
+  background: #fffdf6;
+  color: #141513;
+  -webkit-text-fill-color: #141513;
+  border-color: var(--g-hair);
+}
+
+[data-theme="paper"] .chat-widget .chat-chip:hover,
+[data-theme="paper"] .chat-widget .chat-starter-more {
+  color: var(--g-signal);
+  -webkit-text-fill-color: var(--g-signal);
+  background: #fffdf6;
+}
+
+[data-theme="paper"] .chat-widget .chat-field {
+  background: #fffdf6;
+  color: #141513;
+  -webkit-text-fill-color: #141513;
+}
+
+[data-theme="paper"] .chat-widget .chat-field::placeholder {
+  color: #5c5e56;
+  -webkit-text-fill-color: #5c5e56;
 }
 
 @keyframes bot-float {

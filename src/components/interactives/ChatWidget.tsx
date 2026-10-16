@@ -174,7 +174,7 @@ export function ChatWidget() {
               <button
                 key={starter}
                 type="button"
-                className="studio-chip"
+                className="chat-chip"
                 disabled={busy}
                 onClick={() => void send(starter)}
               >
@@ -184,7 +184,7 @@ export function ChatWidget() {
             {starterPages > 1 ? (
               <button
                 type="button"
-                className="studio-chip chat-starter-more"
+                className="chat-chip chat-starter-more"
                 onClick={() =>
                   setStarterPage((p) => (p + 1) % starterPages)
                 }
@@ -202,7 +202,7 @@ export function ChatWidget() {
             }}
           >
             <input
-              className="studio-input"
+              className="chat-field"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask something…"
@@ -211,7 +211,7 @@ export function ChatWidget() {
             />
             <button
               type="submit"
-              className="studio-btn studio-btn-dark"
+              className="chat-send"
               disabled={busy || !input.trim()}
             >
               {busy ? "…" : "Send"}

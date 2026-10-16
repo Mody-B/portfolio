@@ -632,7 +632,7 @@
   font-size: 0.92rem;
 }
 
-.studio-kicker {
+.studio-panel .studio-kicker {
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -640,7 +640,7 @@
   margin: 0 0 0.55rem;
 }
 
-.studio-chip {
+.studio-panel .studio-chip {
   display: inline-flex;
   align-items: center;
   padding: 0.45rem 0.85rem;
@@ -652,19 +652,19 @@
   cursor: pointer;
 }
 
-.studio-chip:hover,
-.studio-chip.is-active {
+.studio-panel .studio-chip:hover,
+.studio-panel .studio-chip.is-active {
   background: var(--ink);
   color: #fff;
   border-color: var(--ink);
 }
 
-.studio-chip:disabled {
+.studio-panel .studio-chip:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
 
-.studio-btn {
+.studio-panel .studio-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -676,18 +676,18 @@
   cursor: pointer;
 }
 
-.studio-btn-dark {
+.studio-panel .studio-btn-dark {
   background: var(--ink);
   color: #fff;
   border-color: var(--ink);
 }
 
-.studio-btn:disabled {
+.studio-panel .studio-btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
 
-.studio-input {
+.studio-panel .studio-input {
   flex: 1;
   min-width: 0;
   border: 1px solid var(--line);
@@ -695,10 +695,11 @@
   padding: 0.7rem 1rem;
   font: inherit;
   background: #fff;
+  color: var(--ink);
   outline: none;
 }
 
-.chat-log {
+.studio-panel .chat-log {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -707,20 +708,20 @@
   margin: 1.25rem 0 1rem;
 }
 
-.chat-bubble {
+.studio-panel .chat-bubble {
   border-radius: 1rem;
   padding: 0.75rem 0.95rem;
   max-width: 92%;
   background: var(--soft);
 }
 
-.chat-bubble.chat-user {
+.studio-panel .chat-bubble.chat-user {
   align-self: flex-end;
   background: var(--ink);
   color: #fff;
 }
 
-.chat-role {
+.studio-panel .chat-role {
   display: block;
   font-size: 0.7rem;
   letter-spacing: 0.08em;
@@ -729,13 +730,14 @@
   margin-bottom: 0.25rem;
 }
 
-.chat-bubble p {
+.studio-panel .chat-bubble p {
   margin: 0;
   line-height: 1.45;
   font-size: 0.95rem;
 }
 
-.chat-starters,
+.studio-panel .chat-starters,
+.studio-panel .vector-query-chips,
 .vector-query-chips {
   display: flex;
   flex-wrap: wrap;
@@ -743,7 +745,7 @@
   margin-bottom: 1rem;
 }
 
-.chat-form {
+.studio-panel .chat-form {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
