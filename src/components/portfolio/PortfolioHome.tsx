@@ -2,9 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { AskAboutWork } from "@/components/interactives/AskAboutWork";
-import { EvalDashboard } from "@/components/interactives/EvalDashboard";
-import { VectorSearchViz } from "@/components/interactives/VectorSearchViz";
+import { ChatWidget } from "@/components/interactives/ChatWidget";
+import { SkillOrbit } from "@/components/interactives/SkillOrbit";
 import { ProjectAccordion } from "@/components/portfolio/ProjectAccordion";
 import {
   contact,
@@ -16,12 +15,11 @@ import {
 } from "@/content/portfolio";
 
 const nav = [
+  { href: "#skills", label: "Skills" },
   { href: "#summary", label: "Summary" },
   { href: "#experience", label: "Experience" },
   { href: "#projects", label: "Projects" },
-  { href: "#studio", label: "Studio" },
   { href: "#education", label: "Education" },
-  { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
@@ -98,10 +96,32 @@ export function PortfolioHome() {
             </li>
           ))}
         </motion.ul>
-        <a className="flow-scroll" href="#summary">
+        <a className="flow-scroll" href="#skills">
           <span className="flow-location-dot" />
-          Scroll
+          Skills
         </a>
+      </section>
+
+      <section id="skills" className="flow-section flow-skills-hero">
+        <p className="flow-section-kicker">Core focus</p>
+        <h2>Skills</h2>
+        <p className="flow-section-lede">
+          What I actually ship with—RAG systems, ML tooling, and the stack behind
+          BAC AI. Hover a thread to see how it groups.
+        </p>
+        <SkillOrbit />
+        <div className="flow-skills">
+          {skills.groups.map((group) => (
+            <div key={group.title} className="flow-skill-group">
+              <h3>{group.title}</h3>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section id="summary" className="flow-section">
@@ -136,19 +156,6 @@ export function PortfolioHome() {
         <ProjectAccordion projects={projects} />
       </section>
 
-      <section id="studio" className="flow-section">
-        <h2>Studio</h2>
-        <p className="flow-section-lede">
-          Interactive demos of how I think about chat, RAG retrieval, and
-          evaluation—local mocks, no API keys.
-        </p>
-        <div className="flow-studio-stack">
-          <AskAboutWork />
-          <VectorSearchViz />
-          <EvalDashboard />
-        </div>
-      </section>
-
       <section id="education" className="flow-section">
         <h2>Education</h2>
         <div className="flow-education">
@@ -164,22 +171,6 @@ export function PortfolioHome() {
               <dd>{site.education.expected}</dd>
             </div>
           </dl>
-        </div>
-      </section>
-
-      <section id="skills" className="flow-section">
-        <h2>Skills</h2>
-        <div className="flow-skills">
-          {skills.groups.map((group) => (
-            <div key={group.title} className="flow-skill-group">
-              <h3>{group.title}</h3>
-              <ul>
-                {group.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -229,6 +220,8 @@ export function PortfolioHome() {
           <Link href="/design/">archived design refs</Link>
         </p>
       </footer>
+
+      <ChatWidget />
     </div>
   );
 }
