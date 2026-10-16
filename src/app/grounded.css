@@ -52,7 +52,7 @@
   mix-blend-mode: overlay;
 }
 
-.grounded > *:not(.g-texture) {
+.grounded > *:not(.g-texture):not(.chat-widget) {
   position: relative;
   z-index: 1;
 }
@@ -948,64 +948,105 @@
   }
 }
 
-/* Floating chatbot (Grounded) */
+/* Floating chatbot — portaled to body, always viewport-fixed */
 .chat-widget {
-  position: fixed;
-  right: 1.1rem;
-  bottom: 1.1rem;
-  z-index: 70;
+  position: fixed !important;
+  right: 1.15rem;
+  bottom: 1.15rem;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.75rem;
+  gap: 0.8rem;
   max-width: calc(100vw - 1.5rem);
+  pointer-events: none;
+}
+
+.chat-widget > * {
+  pointer-events: auto;
 }
 
 .chat-widget-fab {
-  width: 3.4rem;
-  height: 3.4rem;
-  border: 1px solid var(--g-hair);
+  width: 3.75rem;
+  height: 3.75rem;
+  border: 2px solid color-mix(in oklab, var(--g-signal) 70%, #fff);
   border-radius: 50%;
-  background: var(--g-panel);
-  color: var(--g-text);
+  background: radial-gradient(
+    circle at 35% 30%,
+    #1a1c16 0%,
+    #0f110d 70%
+  );
+  color: var(--g-signal-ink);
   padding: 0;
   cursor: pointer;
-  box-shadow: 0 12px 32px var(--g-shadow);
+  box-shadow:
+    0 0 0 4px color-mix(in oklab, var(--g-signal) 28%, transparent),
+    0 14px 36px rgba(0, 0, 0, 0.45);
   display: grid;
   place-items: center;
-  animation: bot-float 3.2s ease-in-out infinite;
+  animation: bot-float 2.8s ease-in-out infinite;
+  isolation: isolate;
+}
+
+[data-theme="paper"] .chat-widget-fab {
+  background: radial-gradient(circle at 35% 30%, #fffef8 0%, #f0ebe0 70%);
+  box-shadow:
+    0 0 0 4px color-mix(in oklab, var(--g-signal) 22%, transparent),
+    0 12px 28px rgba(20, 21, 19, 0.18);
 }
 
 .chat-widget-fab:hover {
-  border-color: var(--g-signal);
-  transform: translateY(-3px) scale(1.04);
+  transform: translateY(-4px) scale(1.06);
+  box-shadow:
+    0 0 0 5px color-mix(in oklab, var(--g-signal) 40%, transparent),
+    0 18px 40px rgba(0, 0, 0, 0.5);
 }
 
 .chat-widget-fab.is-open {
   animation: none;
   background: var(--g-signal);
-  color: var(--g-signal-ink);
   border-color: var(--g-signal);
+  color: var(--g-signal-ink);
 }
 
 .chat-bot-x {
-  font-size: 1.45rem;
+  font-size: 1.55rem;
   line-height: 1;
+  font-weight: 700;
 }
 
 .chat-bot {
   position: relative;
-  width: 1.55rem;
-  height: 1.45rem;
+  width: 1.85rem;
+  height: 1.7rem;
   display: block;
+}
+
+.chat-bot-mini {
+  width: 1.35rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.chat-bot-glow {
+  position: absolute;
+  inset: -0.55rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--g-signal) 55%, transparent),
+    transparent 68%
+  );
+  animation: bot-glow 2.4s ease-in-out infinite;
+  z-index: -1;
 }
 
 .chat-bot-antenna {
   position: absolute;
   left: 50%;
-  top: -0.28rem;
+  top: -0.35rem;
   width: 2px;
-  height: 0.35rem;
+  height: 0.4rem;
   background: var(--g-signal);
   transform: translateX(-50%);
 }
@@ -1014,25 +1055,48 @@
   content: "";
   position: absolute;
   left: 50%;
-  top: -0.28rem;
-  width: 0.35rem;
-  height: 0.35rem;
+  top: -0.32rem;
+  width: 0.42rem;
+  height: 0.42rem;
   border-radius: 50%;
   background: var(--g-signal);
+  box-shadow: 0 0 8px var(--g-signal);
   transform: translateX(-50%);
-  animation: antenna-bob 1.6s ease-in-out infinite;
+  animation: antenna-bob 1.4s ease-in-out infinite;
+}
+
+.chat-bot-ear {
+  position: absolute;
+  top: 0.35rem;
+  width: 0.28rem;
+  height: 0.45rem;
+  background: var(--g-signal);
+  border-radius: 0.2rem;
+}
+
+.chat-bot-ear-l {
+  left: -0.18rem;
+}
+
+.chat-bot-ear-r {
+  right: -0.18rem;
 }
 
 .chat-bot-face {
   position: absolute;
   inset: 0;
-  border-radius: 0.55rem;
-  background: var(--g-text);
+  border-radius: 0.65rem;
+  background: linear-gradient(160deg, #f7f9ef 0%, #e8f0c8 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.28rem;
-  padding-bottom: 0.15rem;
+  gap: 0.32rem;
+  padding-bottom: 0.2rem;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.chat-bot-mini .chat-bot-face {
+  background: linear-gradient(160deg, #f7f9ef 0%, #dce8a8 100%);
 }
 
 .chat-widget-fab.is-open .chat-bot-face {
@@ -1040,22 +1104,52 @@
 }
 
 .chat-bot-eye {
-  width: 0.28rem;
-  height: 0.28rem;
+  width: 0.32rem;
+  height: 0.32rem;
   border-radius: 50%;
-  background: var(--g-ink);
-  animation: blink 4s step-end infinite;
+  background: #141513;
+  animation: blink 3.6s step-end infinite;
+}
+
+.chat-bot-mini .chat-bot-eye {
+  width: 0.22rem;
+  height: 0.22rem;
 }
 
 .chat-bot-mouth {
   position: absolute;
   left: 50%;
   bottom: 0.28rem;
-  width: 0.45rem;
-  height: 0.18rem;
-  border-radius: 0 0 0.3rem 0.3rem;
-  background: var(--g-ink);
+  width: 0.55rem;
+  height: 0.22rem;
+  border-radius: 0 0 0.4rem 0.4rem;
+  background: #141513;
   transform: translateX(-50%);
+  animation: smile 2.8s ease-in-out infinite;
+}
+
+.chat-bot-blush {
+  position: absolute;
+  bottom: 0.42rem;
+  width: 0.28rem;
+  height: 0.16rem;
+  border-radius: 50%;
+  background: color-mix(in oklab, #ff7a90 55%, transparent);
+  opacity: 0.7;
+}
+
+.chat-bot-blush-l {
+  left: 0.18rem;
+}
+
+.chat-bot-blush-r {
+  right: 0.18rem;
+}
+
+.chat-widget-head-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 .chat-widget-panel {
@@ -1225,7 +1319,19 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes bot-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
   }
 }
 
@@ -1235,7 +1341,7 @@
     transform: translateX(-50%) translateY(0);
   }
   50% {
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateX(-50%) translateY(-3px);
   }
 }
 
@@ -1247,14 +1353,26 @@
     transform: scaleY(1);
   }
   47% {
-    transform: scaleY(0.15);
+    transform: scaleY(0.12);
+  }
+}
+
+@keyframes smile {
+  0%,
+  100% {
+    width: 0.55rem;
+  }
+  50% {
+    width: 0.7rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .chat-widget-fab,
   .chat-bot-antenna::before,
-  .chat-bot-eye {
+  .chat-bot-eye,
+  .chat-bot-glow,
+  .chat-bot-mouth {
     animation: none;
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   chatFallback,
   chatReplies,
@@ -11,6 +12,7 @@ import { matchChatReply, streamText } from "@/lib/mock-stream";
 type Msg = { role: "user" | "assistant"; text: string };
 
 export function ChatWidget() {
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
     {
@@ -23,6 +25,10 @@ export function ChatWidget() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const panelId = useId();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -59,7 +65,9 @@ export function ChatWidget() {
     setBusy(false);
   }
 
-  return (
+  if (!mounted) return null;
+
+  const ui = (
     <div className={`chat-widget${open ? " is-open" : ""}`}>
       {open ? (
         <div
@@ -69,9 +77,19 @@ export function ChatWidget() {
           aria-label="Ask Mohamad"
         >
           <header className="chat-widget-head">
-            <div>
-              <p className="chat-widget-kicker">Ask Mohamad</p>
-              <p className="chat-widget-sub">AI engineering · local mock</p>
+            <div className="chat-widget-head-row">
+              <span className="chat-bot chat-bot-mini" aria-hidden>
+                <span className="chat-bot-antenna" />
+                <span className="chat-bot-face">
+                  <span className="chat-bot-eye" />
+                  <span className="chat-bot-eye" />
+                </span>
+                <span className="chat-bot-mouth" />
+              </span>
+              <div>
+                <p className="chat-widget-kicker">Ask Mohamad</p>
+                <p className="chat-widget-sub">AI engineering · local mock</p>
+              </div>
             </div>
             <button
               type="button"
@@ -152,15 +170,22 @@ export function ChatWidget() {
           </span>
         ) : (
           <span className="chat-bot" aria-hidden>
+            <span className="chat-bot-glow" />
             <span className="chat-bot-antenna" />
+            <span className="chat-bot-ear chat-bot-ear-l" />
+            <span className="chat-bot-ear chat-bot-ear-r" />
             <span className="chat-bot-face">
               <span className="chat-bot-eye" />
               <span className="chat-bot-eye" />
             </span>
             <span className="chat-bot-mouth" />
+            <span className="chat-bot-blush chat-bot-blush-l" />
+            <span className="chat-bot-blush chat-bot-blush-r" />
           </span>
         )}
       </button>
     </div>
   );
+
+  return createPortal(ui, document.body);
 }
