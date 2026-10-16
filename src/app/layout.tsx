@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Manrope } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import "./lumen.css";
 
-const display = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-flow-display",
-});
-
-const sans = Manrope({
+const sans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-flow-sans",
@@ -30,10 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${display.variable} ${sans.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${sans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

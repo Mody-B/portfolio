@@ -28,7 +28,12 @@ export function PortfolioHome() {
 
   return (
     <div className="flow">
-      <div className="flow-atmosphere" aria-hidden />
+      <div className="flow-atmosphere" aria-hidden>
+        <div className="flow-atmosphere-grid" />
+        <div className="flow-atmosphere-orb flow-atmosphere-orb-a" />
+        <div className="flow-atmosphere-orb flow-atmosphere-orb-b" />
+        <div className="flow-atmosphere-orb flow-atmosphere-orb-c" />
+      </div>
 
       <header className="flow-nav">
         <a href="#top" className="flow-brand">
@@ -59,8 +64,7 @@ export function PortfolioHome() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          {site.firstName}{" "}
-          <span className="flow-name-accent">{site.lastName}</span>
+          {site.name}
         </motion.h1>
         <motion.p
           className="flow-role"

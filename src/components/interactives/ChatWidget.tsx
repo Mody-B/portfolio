@@ -140,12 +140,26 @@ export function ChatWidget() {
 
       <button
         type="button"
-        className="chat-widget-fab"
+        className={`chat-widget-fab${open ? " is-open" : ""}`}
         aria-expanded={open}
         aria-controls={panelId}
+        aria-label={open ? "Close chat" : "Open chat with Mohamad"}
         onClick={() => setOpen((v) => !v)}
       >
-        {open ? "Close" : "Chat"}
+        {open ? (
+          <span className="chat-bot-x" aria-hidden>
+            ×
+          </span>
+        ) : (
+          <span className="chat-bot" aria-hidden>
+            <span className="chat-bot-antenna" />
+            <span className="chat-bot-face">
+              <span className="chat-bot-eye" />
+              <span className="chat-bot-eye" />
+            </span>
+            <span className="chat-bot-mouth" />
+          </span>
+        )}
       </button>
     </div>
   );
