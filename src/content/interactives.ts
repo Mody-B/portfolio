@@ -15,8 +15,25 @@ export type ChatPair = {
 export const chatStarters = [
   "What kind of AI work do you do?",
   "Tell me about BAC AI",
+  "How does BAC AI retrieve answers?",
   "How do you think about RAG?",
+  "What’s your stack?",
   "How do you evaluate quality?",
+  "Any hackathon wins?",
+  "Do you tutor?",
+  "Are you open to internships?",
+  "Where did you study?",
+  "How do you handle Arabic / RTL?",
+  "What’s your approach to agents?",
+  "Tell me about the heart-disease project",
+  "How can I contact you?",
+] as const;
+
+export const chatNudgeLines = [
+  "Hey — ask me questions!",
+  "Curious about BAC AI? Ask away.",
+  "Ask me about RAG, stack, or internships.",
+  "I’m here — try a question!",
 ] as const;
 
 export const chatReplies: ChatPair[] = [
@@ -28,12 +45,22 @@ export const chatReplies: ChatPair[] = [
   {
     triggers: ["bac", "baccalaureate", "textbook", "study assistant", "syria"],
     answer:
-      "BAC AI is a live Syrian Baccalaureate study assistant I founded and engineered. Students chat with official Grade 12 textbooks, open the cited page, and revise with quiz questions from retrieved lessons. Stack: FastAPI, Qdrant, BGE-M3, Qwen, React, Docker—Arabic RTL + English, with intent routing and grounding checks.",
+      "BAC AI is a live Syrian Baccalaureate study assistant I founded and engineered. Students chat with official Grade 12 textbooks, open the cited page, and revise with quiz questions from retrieved lessons. Stack: FastAPI, Qdrant, BGE-M3, Qwen, React, Docker—Arabic RTL + English, with intent routing and grounding checks. Try it at bacai.dev.",
+  },
+  {
+    triggers: ["how does bac", "retrieve answer", "pipeline", "qdrant", "bge"],
+    answer:
+      "BAC AI’s path is PDF/OCR → lesson-boundary chunking → BGE-M3 (1024-dim) → Qdrant → intent routing → Qwen → answer with a cited textbook page. Retrieval is the quality lever; generation only speaks from what was retrieved.",
   },
   {
     triggers: ["rag", "retrieval", "ground", "citation", "knowledge", "vector"],
     answer:
       "For RAG I start with the corpus contract—what’s allowed to be true—then retrieval that can refuse. On BAC AI that means lesson-aware chunking, BGE-M3 embeddings, Qdrant search, and citations pinned to official pages. If evidence is thin, the system should say so instead of improvising.",
+  },
+  {
+    triggers: ["stack", "tech", "tools", "fastapi", "react", "docker"],
+    answer:
+      "Day-to-day: Python, FastAPI, Qdrant, BGE-M3, Qwen, React (bilingual RTL), Docker, GitHub Actions, plus TypeScript/SQL. Heart-disease work used scikit-learn and pandas. Full index is in the Stack section.",
   },
   {
     triggers: ["agent", "tool", "multi-step", "orchestr"],
@@ -51,9 +78,29 @@ export const chatReplies: ChatPair[] = [
       "BAC AI handles Arabic, English, and French study questions with separate catalogs and query-dependent search—grammar vs poetry, workbook vs student book, writing topics. The web UI is bilingual with Arabic RTL.",
   },
   {
+    triggers: ["hack", "sync", "kiro", "award", "3rd", "third"],
+    answer:
+      "I placed 3rd at the Kiro Hackathon during SYNC'26 (Damascus Opera House, Oct 2026)—built and deployed a live AI voice character with agentic coding. Awarded an AWS Associate Certification exam voucher. Certificate and repo are linked in Activities.",
+  },
+  {
+    triggers: ["tutor", "teach", "math", "hobby", "science"],
+    answer:
+      "I tutor mathematics, science, and English as a hobby—clear explanations, adapted to the student’s pace. It’s listed under Activities.",
+  },
+  {
+    triggers: ["school", "univers", "educat", "aiu", "stud"],
+    answer:
+      "I’m a fourth-year Informatics Engineering student specializing in AI at Arab International University, expected 2028. Details are in About + Education.",
+  },
+  {
+    triggers: ["ml project", "heart", "data collection", "real life", "real-world"],
+    answer:
+      "Besides BAC AI I’ve worked on real-world ML projects involving data collection, model evaluation, and API integration—for example heart-disease classification comparing logistic regression vs random forest with scikit-learn.",
+  },
+  {
     triggers: ["hire", "work with", "contact", "available", "collaborate", "intern"],
     answer:
-      "I’m seeking AI/ML engineering internships and junior roles. Email mohamad.bitar05@gmail.com, or find me on GitHub (Mody-B) and LinkedIn—links are in the contact section.",
+      "Yes — I’m seeking AI/ML engineering internships and junior roles. Email mohamad.bitar05@gmail.com, or find me on GitHub (Mody-B) and LinkedIn. There’s a Contact section with a one-click copy for email.",
   },
 ];
 

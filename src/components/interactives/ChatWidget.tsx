@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   chatFallback,
+  chatNudgeLines,
   chatReplies,
   chatStarters,
 } from "@/content/interactives";
@@ -14,17 +15,27 @@ type Msg = { role: "user" | "assistant"; text: string };
 export function ChatWidget() {
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
+  const [nudge, setNudge] = useState<string | null>(null);
+  const [starterPage, setStarterPage] = useState(0);
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: "assistant",
-      text: "Hi — ask about BAC AI, RAG, skills, or internships. Local mock replies, not a live model.",
+      text: "Hi — ask about BAC AI, RAG, skills, hackathons, or internships. Local mock replies, not a live model.",
     },
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const nudgeIndexRef = useRef(0);
   const panelId = useId();
+
+  const pageSize = 5;
+  const starterPages = Math.ceil(chatStarters.length / pageSize);
+  const visibleStarters = chatStarters.slice(
+    starterPage * pageSize,
+    starterPage * pageSize + pageSize
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -34,6 +45,34 @@ export function ChatWidget() {
     if (!open) return;
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [messages, open]);
+
+  // Periodic nudge when chat is closed
+  useEffect(() => {
+    if (open) {
+      setNudge(null);
+      return;
+    }
+
+    const show = () => {
+      const i = nudgeIndexRef.current % chatNudgeLines.length;
+      nudgeIndexRef.current = i + 1;
+      setNudge(chatNudgeLines[i]);
+    };
+
+    const first = window.setTimeout(show, 4500);
+    const loop = window.setInterval(show, 14000);
+    return () => {
+      window.clearTimeout(first);
+      window.clearInterval(loop);
+    };
+  }, [open]);
+
+  // Auto-hide nudge bubble after a few seconds
+  useEffect(() => {
+    if (!nudge || open) return;
+    const t = window.setTimeout(() => setNudge(null), 4200);
+    return () => window.clearTimeout(t);
+  }, [nudge, open]);
 
   async function send(raw: string) {
     const question = raw.trim();
@@ -45,6 +84,7 @@ export function ChatWidget() {
 
     setBusy(true);
     setInput("");
+    setNudge(null);
     setMessages((m) => [...m, { role: "user", text: question }]);
 
     const answer = matchChatReply(question, chatReplies, chatFallback);
@@ -69,6 +109,19 @@ export function ChatWidget() {
 
   const ui = (
     <div className={`chat-widget${open ? " is-open" : ""}`}>
+      {!open && nudge ? (
+        <button
+          type="button"
+          className="chat-nudge"
+          onClick={() => {
+            setOpen(true);
+            setNudge(null);
+          }}
+        >
+          {nudge}
+        </button>
+      ) : null}
+
       {open ? (
         <div
           className="chat-widget-panel"
@@ -117,7 +170,7 @@ export function ChatWidget() {
           </div>
 
           <div className="chat-widget-starters">
-            {chatStarters.slice(0, 3).map((starter) => (
+            {visibleStarters.map((starter) => (
               <button
                 key={starter}
                 type="button"
@@ -128,6 +181,17 @@ export function ChatWidget() {
                 {starter}
               </button>
             ))}
+            {starterPages > 1 ? (
+              <button
+                type="button"
+                className="studio-chip chat-starter-more"
+                onClick={() =>
+                  setStarterPage((p) => (p + 1) % starterPages)
+                }
+              >
+                More questions →
+              </button>
+            ) : null}
           </div>
 
           <form
@@ -162,7 +226,10 @@ export function ChatWidget() {
         aria-expanded={open}
         aria-controls={panelId}
         aria-label={open ? "Close chat" : "Open chat with Mohamad"}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          setOpen((v) => !v);
+          setNudge(null);
+        }}
       >
         {open ? (
           <span className="chat-bot-x" aria-hidden>
