@@ -1,231 +1,209 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import Link from "next/link";
-import { ChatWidget } from "@/components/interactives/ChatWidget";
-import { SkillOrbit } from "@/components/interactives/SkillOrbit";
-import { ProjectAccordion } from "@/components/portfolio/ProjectAccordion";
+import Image from "next/image";
+import { useState } from "react";
+import { Citation } from "@/components/grounded/Citation";
+import { Pipeline } from "@/components/grounded/Pipeline";
+import { QueryBar } from "@/components/grounded/QueryBar";
+import { Section } from "@/components/grounded/Section";
+import { SiteNav } from "@/components/grounded/SiteNav";
+import { StreamLine } from "@/components/grounded/StreamLine";
 import {
-  contact,
-  experience,
-  projects,
+  about,
+  citations,
+  flagship,
+  otherWork,
   site,
-  skills,
-  summary,
-} from "@/content/portfolio";
-
-const nav = [
-  { href: "#skills", label: "Skills" },
-  { href: "#summary", label: "Summary" },
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#education", label: "Education" },
-  { href: "#contact", label: "Contact" },
-] as const;
+  stackGroups,
+} from "@/content/grounded";
 
 export function PortfolioHome() {
-  const reduce = useReducedMotion();
+  const [copied, setCopied] = useState(false);
+
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(site.email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      window.location.href = `mailto:${site.email}`;
+    }
+  }
 
   return (
-    <div className="flow">
-      <div className="flow-atmosphere" aria-hidden>
-        <div className="flow-atmosphere-grid" />
-        <div className="flow-atmosphere-orb flow-atmosphere-orb-a" />
-        <div className="flow-atmosphere-orb flow-atmosphere-orb-b" />
-        <div className="flow-atmosphere-orb flow-atmosphere-orb-c" />
-      </div>
+    <div className="grounded">
+      <div className="g-texture" aria-hidden />
+      <SiteNav />
 
-      <header className="flow-nav">
-        <a href="#top" className="flow-brand">
-          {site.firstName} <span>·</span> {site.lastName}
-        </a>
-        <nav aria-label="Primary">
-          {nav.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
+      <main>
+        <section className="g-hero" id="top" aria-label="Hero">
+          <p className="g-mono g-meta">{site.metaLine}</p>
+          <h1 className="g-name">{site.name}</h1>
+          <StreamLine text={site.streamLine} className="g-stream" />
+          <QueryBar />
+          <div className="g-hero-actions">
+            <a
+              className="g-btn-primary"
+              href={site.bacaiLive}
+              target="_blank"
+              rel="noreferrer"
+            >
+              See BAC AI live →
             </a>
-          ))}
-        </nav>
-      </header>
-
-      <section className="flow-hero" id="top" aria-label="Hero">
-        <motion.p
-          className="flow-location"
-          initial={reduce ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <span className="flow-location-dot" />
-          {site.location}
-        </motion.p>
-        <motion.h1
-          className="flow-name"
-          initial={reduce ? false : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {site.name}
-        </motion.h1>
-        <motion.p
-          className="flow-role"
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.6 }}
-        >
-          {site.role}
-        </motion.p>
-        <motion.p
-          className="flow-lede"
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.6 }}
-        >
-          {site.tagline}
-        </motion.p>
-        <motion.ul
-          className="flow-socials"
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.6 }}
-        >
-          {site.socials.map((s) => (
-            <li key={s.label}>
-              <a
-                href={s.href}
-                target={s.href.startsWith("http") ? "_blank" : undefined}
-                rel={s.href.startsWith("http") ? "noreferrer" : undefined}
-              >
-                {s.label}
+            <div className="g-hero-links">
+              <a href={site.resumeHref}>Résumé (PDF)</a>
+              <a href={site.github} target="_blank" rel="noreferrer">
+                GitHub
               </a>
-            </li>
-          ))}
-        </motion.ul>
-        <a className="flow-scroll" href="#skills">
-          <span className="flow-location-dot" />
-          Skills
-        </a>
-      </section>
+              <a href={site.linkedin} target="_blank" rel="noreferrer">
+                LinkedIn
+              </a>
+              <a href={`mailto:${site.email}`}>Email</a>
+            </div>
+          </div>
+        </section>
 
-      <section id="skills" className="flow-section flow-skills-hero">
-        <p className="flow-section-kicker">Core focus</p>
-        <h2>Skills</h2>
-        <p className="flow-section-lede">
-          What I actually ship with—RAG systems, ML tooling, and the stack behind
-          BAC AI. Hover a thread to see how it groups.
-        </p>
-        <SkillOrbit />
-        <div className="flow-skills">
-          {skills.groups.map((group) => (
-            <div key={group.title} className="flow-skill-group">
-              <h3>{group.title}</h3>
-              <ul>
-                {group.items.map((item) => (
-                  <li key={item}>{item}</li>
+        <Section id="flagship" doc={flagship.doc} wide>
+          <div className="g-flagship-grid">
+            <div className="g-flagship-copy">
+              <h2 className="g-h2">{flagship.title}</h2>
+              <p className="g-sub">{flagship.subtitle}</p>
+              <p className="g-mono g-meta">
+                {flagship.role} · {flagship.period}
+              </p>
+              <p className="g-lede">{flagship.lede}</p>
+              <ul className="g-fact-list">
+                {flagship.facts.map((fact) => (
+                  <li key={fact.text}>
+                    {fact.text}{" "}
+                    <Citation citation={citations[fact.cite]} pulse />
+                  </li>
                 ))}
               </ul>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section id="summary" className="flow-section">
-        <h2>Summary</h2>
-        <p className="flow-prose">{summary.body}</p>
-      </section>
-
-      <section id="experience" className="flow-section">
-        <h2>Experience</h2>
-        <ul className="flow-experience">
-          {experience.map((job) => (
-            <li key={job.id}>
-              <div className="flow-experience-head">
-                <div>
-                  <h3>{job.title}</h3>
-                  <p className="flow-org">{job.org}</p>
-                </div>
-                <span className="flow-period">{job.period}</span>
+              <div className="g-flagship-links">
+                <a href={site.bacaiLive} target="_blank" rel="noreferrer">
+                  Live site →
+                </a>
+                <a href={site.bacaiApp} target="_blank" rel="noreferrer">
+                  App →
+                </a>
               </div>
-              <ul>
-                {job.bullets.map((b) => (
-                  <li key={b.slice(0, 48)}>{b}</li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section id="projects" className="flow-section">
-        <h2>Projects</h2>
-        <ProjectAccordion projects={projects} />
-      </section>
-
-      <section id="education" className="flow-section">
-        <h2>Education</h2>
-        <div className="flow-education">
-          <h3>{site.education.program}</h3>
-          <p className="flow-org">{site.education.school}</p>
-          <dl>
-            <div>
-              <dt>Status</dt>
-              <dd>{site.education.detail}</dd>
             </div>
-            <div>
-              <dt>Expected</dt>
-              <dd>{site.education.expected}</dd>
+            <div className="g-flagship-media">
+              {flagship.screenshots.map((shot) => (
+                <figure key={shot.src} className="g-browser">
+                  <div className="g-browser-bar">
+                    <span />
+                    <span />
+                    <span />
+                    <em>{shot.caption}</em>
+                  </div>
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    width={1200}
+                    height={750}
+                    className="g-browser-img"
+                    sizes="(max-width: 900px) 100vw, 52vw"
+                  />
+                </figure>
+              ))}
             </div>
-          </dl>
-        </div>
-      </section>
+          </div>
+          <div className="g-pipeline-wrap">
+            <p className="g-mono g-meta">pipeline · retrieval path</p>
+            <Pipeline />
+          </div>
+        </Section>
 
-      <section id="contact" className="flow-section flow-contact">
-        <h2>{contact.headline}</h2>
-        <a className="flow-contact-email" href={`mailto:${site.email}`}>
-          {site.email} →
-        </a>
-        <p className="flow-section-lede">{contact.body}</p>
-        <ul className="flow-contact-list">
-          <li>
-            <span>Email</span>
-            <a href={`mailto:${site.email}`}>{site.email}</a>
-          </li>
-          <li>
-            <span>LinkedIn</span>
-            <a
-              href="https://www.linkedin.com/in/mohamad-bitar-721b90324"
-              target="_blank"
-              rel="noreferrer"
-            >
-              linkedin.com/in/mohamad-bitar-721b90324
-            </a>
-          </li>
-          <li>
-            <span>GitHub</span>
-            <a
-              href="https://github.com/Mody-B"
-              target="_blank"
-              rel="noreferrer"
-            >
-              github.com/Mody-B
-            </a>
-          </li>
-          <li>
-            <span>Web</span>
-            <a href={`https://${site.domain}`}>{site.domain}</a>
-          </li>
-        </ul>
-      </section>
+        <Section id="other-work" doc={otherWork.doc}>
+          <h2 className="g-h2">Other work</h2>
+          <div className="g-work-grid">
+            {otherWork.items.map((item) => (
+              <article key={item.id} className="g-work-card">
+                <p className="g-mono g-meta">{item.stack}</p>
+                <h3>{item.title}</h3>
+                <p>
+                  {item.summary}{" "}
+                  <Citation citation={citations[item.cite]} />
+                </p>
+                <div className="g-metric">
+                  <strong>{item.metricValue}</strong>
+                  <span>{item.metricLabel}</span>
+                  <em>{item.metricNote}</em>
+                </div>
+              </article>
+            ))}
+            <article className="g-work-card g-work-slot" aria-label="Future project">
+              <p className="g-mono g-meta">reserved</p>
+              <h3>{otherWork.slot.title}</h3>
+              <p>{otherWork.slot.body}</p>
+            </article>
+          </div>
+        </Section>
 
-      <footer className="flow-footer">
-        <p>
-          © {new Date().getFullYear()} {site.name}
+        <Section id="stack" doc="doc_03 · stack · retrieved 0.95" wide>
+          <h2 className="g-h2">Stack</h2>
+          <p className="g-lede g-stack-lede">
+            Compact index. Lime markers cite where BAC AI (or the CV) uses the
+            item — tap to open the source.
+          </p>
+          <div className="g-stack">
+            {stackGroups.map((group) => (
+              <div key={group.title} className="g-stack-col">
+                <h3 className="g-mono">{group.title}</h3>
+                <ul>
+                  {group.items.map((item) => (
+                    <li key={item.label}>
+                      <span>{item.label}</span>
+                      {item.cite ? (
+                        <Citation citation={citations[item.cite]} />
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <Section id="about" doc={about.doc}>
+          <h2 className="g-h2">About + Education</h2>
+          <p className="g-lede">
+            {about.body} <Citation citation={citations.resume} />
+          </p>
+          <ol className="g-timeline">
+            {about.timeline.map((row) => (
+              <li key={row.when}>
+                <span className="g-mono">{row.when}</span>
+                <span>{row.what}</span>
+              </li>
+            ))}
+          </ol>
+        </Section>
+
+        <Section id="contact" doc="doc_05 · contact · retrieved 1.00">
+          <h2 className="g-contact-line">Have a role or idea? Let&apos;s talk.</h2>
+          <div className="g-contact-row">
+            <button type="button" className="g-btn-primary" onClick={copyEmail}>
+              {copied ? "Copied email" : site.email}
+            </button>
+            <a href={site.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+            <a href={site.github} target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+          </div>
+        </Section>
+      </main>
+
+      <footer className="g-footer">
+        <p className="g-mono">
+          © {new Date().getFullYear()} {site.name} · {site.domain}
         </p>
-        <p>
-          <Link href="/design/">archived design refs</Link>
-        </p>
+        <p className="g-mono g-footer-note">Grounded — ask, retrieve, cite.</p>
       </footer>
-
-      <ChatWidget />
     </div>
   );
 }
