@@ -27,8 +27,14 @@ export function ThemeToggle() {
       className="g-theme"
       onClick={toggle}
       aria-label={theme === "ink" ? "Switch to paper theme" : "Switch to ink theme"}
+      title={theme === "ink" ? "Paper mode" : "Ink mode"}
     >
-      {theme === "ink" ? "paper" : "ink"}
+      <span className="g-theme-icon" aria-hidden>
+        {theme === "ink" ? "☀" : "☾"}
+      </span>
+      <span className="g-theme-label">
+        {theme === "ink" ? "Paper" : "Ink"}
+      </span>
     </button>
   );
 }

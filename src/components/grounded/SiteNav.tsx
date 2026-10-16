@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { nav, site } from "@/content/grounded";
+import { nav } from "@/content/grounded";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteNav() {
@@ -28,9 +28,6 @@ export function SiteNav() {
       </nav>
       <div className="g-nav-actions">
         <ThemeToggle />
-        <a className="g-nav-cta" href={site.bacaiLive} target="_blank" rel="noreferrer">
-          BAC AI →
-        </a>
         <button
           type="button"
           className="g-nav-menu"

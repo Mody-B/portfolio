@@ -1,15 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
+import { ChatWidget } from "@/components/interactives/ChatWidget";
 import { Citation } from "@/components/grounded/Citation";
 import { Pipeline } from "@/components/grounded/Pipeline";
 import { QueryBar } from "@/components/grounded/QueryBar";
+import { ScreenshotCarousel } from "@/components/grounded/ScreenshotCarousel";
 import { Section } from "@/components/grounded/Section";
 import { SiteNav } from "@/components/grounded/SiteNav";
 import { StreamLine } from "@/components/grounded/StreamLine";
 import {
   about,
+  activities,
   citations,
   flagship,
   otherWork,
@@ -66,7 +68,16 @@ export function PortfolioHome() {
         <Section id="flagship" doc={flagship.doc} wide>
           <div className="g-flagship-grid">
             <div className="g-flagship-copy">
-              <h2 className="g-h2">{flagship.title}</h2>
+              <h2 className="g-h2">
+                <a
+                  className="g-title-link"
+                  href={site.bacaiLive}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {flagship.title}
+                </a>
+              </h2>
               <p className="g-sub">{flagship.subtitle}</p>
               <p className="g-mono g-meta">
                 {flagship.role} · {flagship.period}
@@ -82,33 +93,17 @@ export function PortfolioHome() {
               </ul>
               <div className="g-flagship-links">
                 <a href={site.bacaiLive} target="_blank" rel="noreferrer">
-                  Live site →
+                  bacai.dev →
                 </a>
                 <a href={site.bacaiApp} target="_blank" rel="noreferrer">
-                  App →
+                  app.bacai.dev →
                 </a>
               </div>
             </div>
-            <div className="g-flagship-media">
-              {flagship.screenshots.map((shot) => (
-                <figure key={shot.src} className="g-browser">
-                  <div className="g-browser-bar">
-                    <span />
-                    <span />
-                    <span />
-                    <em>{shot.caption}</em>
-                  </div>
-                  <Image
-                    src={shot.src}
-                    alt={shot.alt}
-                    width={1200}
-                    height={750}
-                    className="g-browser-img"
-                    sizes="(max-width: 900px) 100vw, 52vw"
-                  />
-                </figure>
-              ))}
-            </div>
+            <ScreenshotCarousel
+              shots={flagship.screenshots}
+              linkHref={site.bacaiLive}
+            />
           </div>
           <div className="g-pipeline-wrap">
             <p className="g-mono g-meta">pipeline · retrieval path</p>
@@ -118,6 +113,7 @@ export function PortfolioHome() {
 
         <Section id="other-work" doc={otherWork.doc}>
           <h2 className="g-h2">Other work</h2>
+          <p className="g-lede">{otherWork.intro}</p>
           <div className="g-work-grid">
             {otherWork.items.map((item) => (
               <article key={item.id} className="g-work-card">
@@ -167,33 +163,83 @@ export function PortfolioHome() {
           </div>
         </Section>
 
-        <Section id="about" doc={about.doc}>
-          <h2 className="g-h2">About + Education</h2>
-          <p className="g-lede">
-            {about.body} <Citation citation={citations.resume} />
-          </p>
-          <ol className="g-timeline">
-            {about.timeline.map((row) => (
-              <li key={row.when}>
-                <span className="g-mono">{row.when}</span>
-                <span>{row.what}</span>
+        <Section id="activities" doc={activities.doc}>
+          <h2 className="g-h2">Activities</h2>
+          <ul className="g-activities">
+            {activities.items.map((item) => (
+              <li key={item.id} className="g-activity">
+                <div className="g-activity-head">
+                  <h3>{item.title}</h3>
+                  <p className="g-mono g-meta">
+                    {item.org} · {item.when}
+                  </p>
+                </div>
+                <p>
+                  {item.body}{" "}
+                  <Citation citation={citations[item.cite]} />
+                </p>
+                {item.links.length ? (
+                  <div className="g-activity-links">
+                    {item.links.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target={link.href.startsWith("http") ? "_blank" : undefined}
+                        rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
               </li>
             ))}
-          </ol>
+          </ul>
         </Section>
 
-        <Section id="contact" doc="doc_05 · contact · retrieved 1.00">
-          <h2 className="g-contact-line">Have a role or idea? Let&apos;s talk.</h2>
-          <div className="g-contact-row">
-            <button type="button" className="g-btn-primary" onClick={copyEmail}>
-              {copied ? "Copied email" : site.email}
-            </button>
-            <a href={site.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn
-            </a>
-            <a href={site.github} target="_blank" rel="noreferrer">
-              GitHub
-            </a>
+        <Section id="about" doc={about.doc}>
+          <div className="g-spotlight g-spotlight-about">
+            <p className="g-mono g-spotlight-kicker">identity · education</p>
+            <h2 className="g-h2">About + Education</h2>
+            <p className="g-lede g-spotlight-lede">
+              {about.body} <Citation citation={citations.resume} />
+            </p>
+            <ol className="g-timeline">
+              {about.timeline.map((row) => (
+                <li key={row.when}>
+                  <span className="g-mono">{row.when}</span>
+                  <span>{row.what}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Section>
+
+        <Section id="contact" doc="doc_06 · contact · retrieved 1.00">
+          <div className="g-spotlight g-spotlight-contact">
+            <p className="g-mono g-spotlight-kicker">reach out</p>
+            <h2 className="g-contact-line">
+              Have a role or idea? Let&apos;s talk.
+            </h2>
+            <p className="g-lede">
+              Internships, junior AI/ML roles, or collaborations — one email is
+              enough.
+            </p>
+            <div className="g-contact-row">
+              <button
+                type="button"
+                className="g-btn-primary g-btn-xl"
+                onClick={copyEmail}
+              >
+                {copied ? "Copied ✓" : site.email}
+              </button>
+              <a href={site.linkedin} target="_blank" rel="noreferrer">
+                LinkedIn
+              </a>
+              <a href={site.github} target="_blank" rel="noreferrer">
+                GitHub
+              </a>
+            </div>
           </div>
         </Section>
       </main>
@@ -204,6 +250,8 @@ export function PortfolioHome() {
         </p>
         <p className="g-mono g-footer-note">Grounded — ask, retrieve, cite.</p>
       </footer>
+
+      <ChatWidget />
     </div>
   );
 }

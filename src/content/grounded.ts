@@ -53,6 +53,18 @@ export const citations: Record<string, Citation> = {
     href: "/Mohamad_Bitar_CV.pdf",
     detail: "CV — Mohamad Bitar, AI Engineer",
   },
+  hackathonCert: {
+    id: "8",
+    label: "Hackathon certificate",
+    href: "/certs/hackathon-3rd-place.pdf",
+    detail: "3rd place — Kiro Hackathon at SYNC'26 (Damascus Opera House)",
+  },
+  hackathonRepo: {
+    id: "9",
+    label: "Hackathon project repo",
+    href: "https://github.com/Mody-B/kiro-hackathon-bizdude",
+    detail: "Public repo from the SYNC'26 / Kiro hackathon build",
+  },
 };
 
 export const site = {
@@ -74,6 +86,7 @@ export const queryPlaceholders = [
   "what has he shipped?",
   "how does BAC AI retrieve?",
   "stack?",
+  "hackathon?",
   "education?",
   "how do I reach him?",
 ] as const;
@@ -99,6 +112,10 @@ export const queryRoutes: { keys: string[]; target: string }[] = [
   {
     keys: ["school", "educat", "univers", "about", "aiu"],
     target: "about",
+  },
+  {
+    keys: ["hack", "tutor", "activit", "sync", "kiro"],
+    target: "activities",
   },
   {
     keys: ["contact", "email", "hire", "intern", "reach", "talk"],
@@ -143,32 +160,34 @@ export const flagship = {
   ],
   screenshots: [
     {
-      src: "/bac-ai/marketing-hero.png",
-      alt: "BAC AI marketing site — ask your book, learn from the official source",
-      caption: "bacai.dev · product story",
+      src: "/bac-ai/chat-cite.png",
+      alt: "BAC AI chat answering a French unit question with cited textbook pages",
+      caption: "app · chat + page citations",
     },
     {
-      src: "/bac-ai/product-tools.png",
-      alt: "BAC AI product tools — chat with textbook citations, original page, revision",
-      caption: "Chat · cited page · revision",
+      src: "/bac-ai/subjects.png",
+      alt: "BAC AI subject picker — Grade 12 literary stream with revision and study cards",
+      caption: "app · subjects & revision",
     },
     {
-      src: "/bac-ai/landing.png",
-      alt: "BAC AI app landing — login and bilingual entry",
-      caption: "app.bacai.dev · entry",
+      src: "/bac-ai/login.png",
+      alt: "BAC AI login — email and Google sign-in",
+      caption: "app · auth",
     },
   ],
 } as const;
 
 export const otherWork = {
   doc: "doc_02 · other work · retrieved 0.88",
+  intro:
+    "Alongside BAC AI I’ve worked on real-world ML projects that involve data collection, model evaluation, and API integration — not notebook demos.",
   items: [
     {
       id: "heart-disease",
       title: "Heart Disease Prediction",
       stack: "Python · scikit-learn · pandas",
       summary:
-        "Binary classification from clinical factors. Compared logistic regression vs random forest and selected the stronger performer.",
+        "Binary classification from clinical factors. Compared logistic regression vs random forest and selected the stronger performer — data prep, evaluation, and model selection end to end.",
       metricLabel: "Models compared",
       metricValue: "2",
       metricNote: "LogReg vs Random Forest",
@@ -179,6 +198,36 @@ export const otherWork = {
     title: "Next project",
     body: "Slot reserved — shipping something grounded soon.",
   },
+} as const;
+
+export const activities = {
+  doc: "doc_04 · activities · retrieved 0.9",
+  items: [
+    {
+      id: "sync26",
+      title: "Hackathon winner — 3rd place",
+      org: "Kiro Hackathon · SYNC'26",
+      when: "9 Oct 2026 · Damascus Opera House",
+      body: "Placed 3rd of all participants building and deploying a live AI voice character with agentic coding. Judged on completeness and solution quality. Awarded an AWS Associate Certification exam voucher.",
+      links: [
+        { label: "Certificate (PDF)", href: "/certs/hackathon-3rd-place.pdf" },
+        {
+          label: "Project repo",
+          href: "https://github.com/Mody-B/kiro-hackathon-bizdude",
+        },
+      ],
+      cite: "hackathonCert" as const,
+    },
+    {
+      id: "tutoring",
+      title: "Tutoring — math, science & English",
+      org: "Hobby / community",
+      when: "Ongoing",
+      body: "I tutor mathematics, science, and English as a hobby — explaining concepts clearly and adapting to each student’s pace.",
+      links: [] as { label: string; href: string }[],
+      cite: "resume" as const,
+    },
+  ],
 } as const;
 
 export type StackItem = {
@@ -259,11 +308,12 @@ export const stackGroups: { title: string; items: StackItem[] }[] = [
 ];
 
 export const about = {
-  doc: "doc_04 · about · retrieved 0.91",
-  body: "Fourth-year Informatics Engineering student specializing in Artificial Intelligence at Arab International University. I ship applied ML products — especially retrieval systems that stay honest about their sources — and I’m looking for AI/ML internships and junior roles.",
+  doc: "doc_05 · about · retrieved 0.91",
+  body: "Fourth-year Informatics Engineering student specializing in Artificial Intelligence at Arab International University. I ship applied ML products — especially retrieval systems that stay honest about their sources — and I’ve also worked on real-life ML projects involving data collection, model evaluation, and API integration. Looking for AI/ML internships and junior roles.",
   timeline: [
     { when: "Expected 2028", what: "B. Informatics Engineering · AI specialization · AIU" },
     { when: "Jul 2026 →", what: "Founded BAC AI · live on bacai.dev" },
+    { when: "Oct 2026", what: "3rd place · Kiro Hackathon at SYNC'26" },
     { when: "Present", what: "Seeking AI/ML internships & junior roles" },
   ],
 } as const;
@@ -272,6 +322,7 @@ export const nav = [
   { href: "#flagship", label: "Flagship" },
   { href: "#other-work", label: "Work" },
   { href: "#stack", label: "Stack" },
+  { href: "#activities", label: "Activities" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ] as const;
