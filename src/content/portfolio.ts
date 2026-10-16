@@ -1,40 +1,46 @@
 /**
  * Editable portfolio copy.
- * Domain: mohamadbit.me (confirmed). Do NOT use mohamadbitar.me (different person).
- * GitHub / LinkedIn / email still TBD until Mohamad confirms.
+ * Domain: mohamadbit.me — do NOT use mohamadbitar.me (different person).
  */
 
 export const site = {
   name: "Mohamad Bitar",
-  /**
-   * Likely GitHub login (API: Mody-B). Confirm before relying on Pages www CNAME.
-   * Social href still TBD until you confirm.
-   */
+  firstName: "Mohamad",
+  lastName: "Bitar",
   githubUsername: "Mody-B",
-  /** Confirmed Student Pack custom domain — keep in sync with `public/CNAME`. */
   domain: "mohamadbit.me",
-  /** TBD — confirm real inbox before shipping. */
-  email: "TBD@example.com",
+  email: "mohamad.bitar05@gmail.com",
   role: "AI Engineer",
-  tagline: "Building production LLM systems that teams can trust.",
-  location: "Open to remote collaboration",
+  tagline:
+    "Building applied ML products—RAG, embeddings, and LLM systems that answer from real data with citations.",
+  availability: "Available for internships",
+  location: "Open to remote · Syria-based",
+  education: {
+    school: "Arab International University",
+    program: "Informatics Engineering — Artificial Intelligence",
+    status: "Fourth-year student · Expected 2028",
+  },
   socials: [
     {
-      label: "GitHub (TBD)",
-      href: "#contact",
+      label: "GitHub",
+      href: "https://github.com/Mody-B",
     },
     {
-      label: "LinkedIn (TBD)",
-      href: "#contact",
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/mohamad-bitar-721b90324",
+    },
+    {
+      label: "Email",
+      href: "mailto:mohamad.bitar05@gmail.com",
     },
   ],
 } as const;
 
 export const about = {
-  headline: "Systems-minded AI engineering",
+  headline: "From laptop experiments to live study AI",
   body: [
-    "I design and ship AI features that hold up outside the demo: retrieval that stays grounded, agents with measurable reliability, and inference paths that respect latency and cost.",
-    "My work sits at the intersection of model capability and product constraints—clear interfaces, evaluation loops, and honest tradeoffs over flashy prototypes.",
+    "I build applied ML products: retrieval-augmented generation, text embeddings, vector search, and LLM systems that answer from real data with source citations.",
+    "I took BAC AI from local experiments to a live website answering multilingual (Arabic, English, French) study questions from official textbooks—and I’m seeking AI/ML engineering internships and junior roles.",
   ],
 } as const;
 
@@ -42,32 +48,39 @@ export const skills = {
   headline: "Where I focus",
   groups: [
     {
-      title: "AI systems",
+      title: "AI Engineering",
       items: [
-        "LLM application design",
         "RAG & grounding",
-        "Agent workflows",
-        "Eval harnesses & regression suites",
-        "Prompt & tool contracts",
+        "Embeddings & vector search",
+        "Prompt design",
+        "LLM integration",
+        "Streaming generation",
+        "Source citation",
+        "Multilingual QA",
       ],
     },
     {
-      title: "Engineering",
+      title: "Machine Learning",
       items: [
-        "TypeScript / Node",
-        "Python services",
-        "Streaming APIs",
-        "Observability for model calls",
-        "CI for model-facing changes",
+        "BGE-M3 embeddings",
+        "Semantic search",
+        "Chunking strategy",
+        "OCR pipelines",
+        "Intent routing",
+        "Model comparison",
+        "Evaluation",
       ],
     },
     {
-      title: "Product craft",
+      title: "Stack",
       items: [
-        "Failure-mode design",
-        "Latency & cost budgets",
-        "Human-in-the-loop flows",
-        "Clear technical writing",
+        "Python",
+        "TypeScript",
+        "FastAPI",
+        "Qdrant",
+        "React",
+        "Docker",
+        "GitHub Actions",
       ],
     },
   ],
@@ -81,57 +94,55 @@ export type Project = {
   approach: string;
   outcome: string;
   stack: string[];
-  /** Set to false or remove when a project is ready to feature. */
+  period?: string;
+  role?: string;
   placeholder: boolean;
 };
 
 export const projects: Project[] = [
   {
-    id: "knowledge-rag",
-    title: "Grounded knowledge assistant",
+    id: "bac-ai",
+    title: "BAC AI — Syrian Baccalaureate Study Assistant",
+    period: "July 2026 – Present",
+    role: "Founder / AI Engineer",
     summary:
-      "Internal RAG assistant that answers from approved docs with citations and refusal when evidence is thin.",
+      "Live study assistant where students chat with official Grade 12 textbooks, open the cited page, and revise with auto-generated quiz questions.",
     problem:
-      "Teams spent hours hunting stale wiki pages; chatbots hallucinated when coverage was incomplete.",
+      "Students needed trustworthy answers grounded in official curricula—across Arabic, English, and French—not generic chatbot guesses.",
     approach:
-      "Chunked corpus with metadata filters, hybrid retrieval, citation-required generation, and a nightly eval set for faithfulness.",
+      "End-to-end RAG: PDF/OCR extraction, lesson-boundary chunking, BGE-M3 embeddings, Qdrant search, intent routing before generation, citation-pinned answers, FastAPI + bilingual React (RTL), Docker deploy.",
     outcome:
-      "Placeholder metric: faster answers on support questions with measurable citation coverage. Replace with your results.",
-    stack: ["Python", "embeddings", "vector store", "eval suite"],
-    placeholder: true,
+      "Shipped a production web product with JWT/Google auth, subscriptions, admin panel, streaming generation (Qwen via Ollama locally / OpenRouter in production), and pytest API coverage.",
+    stack: [
+      "Python",
+      "FastAPI",
+      "Qdrant",
+      "BGE-M3",
+      "Qwen",
+      "React",
+      "Docker",
+    ],
+    placeholder: false,
   },
   {
-    id: "agent-evals",
-    title: "Agent reliability harness",
+    id: "heart-disease",
+    title: "Heart Disease Prediction",
+    role: "Machine Learning Project",
     summary:
-      "Scenario-based evaluation loop for multi-step agents—tool choice, recovery, and regression gates in CI.",
+      "Binary classification model predicting heart disease from clinical factors.",
     problem:
-      "Agent demos looked strong until edge cases and tool failures appeared in production.",
+      "Needed a clear baseline for clinical tabular prediction and model comparison.",
     approach:
-      "Golden trajectories, fault injection on tools, scored rubrics, and blocking CI checks on quality regressions.",
+      "Trained and compared logistic regression and random forest with scikit-learn and pandas to select the best performer.",
     outcome:
-      "Placeholder: fewer silent failures shipping to staging. Swap in your harness and numbers.",
-    stack: ["TypeScript", "trace logging", "CI", "LLM judges"],
-    placeholder: true,
-  },
-  {
-    id: "inference-routing",
-    title: "Cost-aware inference routing",
-    summary:
-      "Streaming inference gateway that routes easy vs hard requests across model tiers under latency SLOs.",
-    problem:
-      "A single premium model blew the budget; cheaper models failed on hard queries without a clear policy.",
-    approach:
-      "Classifier + confidence thresholds, fallback ladder, token/cost telemetry, and kill switches per route.",
-    outcome:
-      "Placeholder: lower average cost with SLO-preserving quality. Replace with measured before/after.",
-    stack: ["Node", "streaming", "observability", "model APIs"],
-    placeholder: true,
+      "Delivered a compared baseline with a documented winner for the classification task.",
+    stack: ["Python", "scikit-learn", "pandas"],
+    placeholder: false,
   },
 ];
 
 export const contact = {
-  headline: "Let’s talk about AI systems that ship",
-  body: "If you’re building LLM features and need someone who cares about evals, grounding, and operability—reach out.",
+  headline: "Let’s build something grounded",
+  body: "Seeking AI/ML engineering internships and junior roles. If you’re shipping RAG, evals, or applied LLM products—reach out.",
   cta: "Email Mohamad",
 } as const;

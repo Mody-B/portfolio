@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { Space_Grotesk, Syne } from "next/font/google";
 import "./globals.css";
 import "./lumen.css";
 
-const display = Cormorant_Garamond({
+const display = Syne({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-lumen-display",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-atelier-display",
 });
 
-const sans = Outfit({
+const sans = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-lumen-sans",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-atelier-sans",
 });
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s · Mohamad Bitar",
   },
   description:
-    "Animated portfolio for Mohamad Bitar — AI engineering, production LLM systems, elegant interaction.",
+    "Mohamad Bitar — AI engineer building RAG, embeddings, and LLM systems. Portfolio with interactive demos. mohamadbit.me",
 };
 
 export default function RootLayout({

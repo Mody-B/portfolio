@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   chatFallback,
   chatReplies,
@@ -16,7 +14,7 @@ export function AskAboutWork() {
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: "assistant",
-      text: "Ask about the work—RAG, agents, evals, cost. This is a local mock with curated replies, not a live model.",
+      text: "Ask about BAC AI, RAG, evals, or internships. Local mock with curated replies—not a live model.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -59,14 +57,13 @@ export function AskAboutWork() {
   }
 
   return (
-    <div className="interactive-panel ask-panel">
-      <header className="interactive-head">
-        <p className="interactive-kicker">01 · Conversation</p>
+    <div className="studio-panel">
+      <header className="studio-panel-head">
+        <p className="studio-kicker">01 · Conversation</p>
         <h3>Ask about the work</h3>
         <p>
-          A short, streaming chat with curated answers in an AI-engineering
-          voice. No API key—edit replies in{" "}
-          <code>src/content/interactives.ts</code>.
+          Streaming chat with curated AI-engineering answers. No API key—edit
+          replies in <code>src/content/interactives.ts</code>.
         </p>
       </header>
 
@@ -90,7 +87,7 @@ export function AskAboutWork() {
           <button
             key={starter}
             type="button"
-            className="starter-chip"
+            className="studio-chip"
             disabled={busy}
             onClick={() => void send(starter)}
           >
@@ -106,16 +103,21 @@ export function AskAboutWork() {
           void send(input);
         }}
       >
-        <Input
+        <input
+          className="studio-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask about RAG, agents, evals…"
+          placeholder="Ask about RAG, BAC AI, evals…"
           disabled={busy}
           aria-label="Your question"
         />
-        <Button type="submit" disabled={busy || !input.trim()}>
+        <button
+          type="submit"
+          className="studio-btn studio-btn-dark"
+          disabled={busy || !input.trim()}
+        >
           {busy ? "…" : "Ask"}
-        </Button>
+        </button>
       </form>
     </div>
   );
